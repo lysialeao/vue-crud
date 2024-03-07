@@ -2,7 +2,7 @@
     <div class="container mt-5">
         <div class="card">
             <div class="card-header">
-                <h4>Students</h4>
+                <h4>Edit Students</h4>
             </div>
             <div class="card-body">
                 <ul class="alert alert-warning" v-if="Object.keys(this.errorList).length > 0">
@@ -23,8 +23,8 @@
                     <input type="text" class="form-control" v-model="model.student.email"/>
                 </div>
                 <div class="mg-3">
-                    <button class="btn btn-primary" type="button" @click="saveStudent()">
-                        Save
+                    <button class="btn btn-primary" type="button" @click="updateStudent()">
+                        Update
                     </button>
                 </div>
             </div>
@@ -34,9 +34,10 @@
 <script>
 import axios from 'axios'
     export default {
-        name: 'studentCreate',
+        name: 'studentUpdate',
         data(){
             return {
+                studentId: '',
                 errorList: '',
                 model: {
                     student : {
@@ -47,17 +48,26 @@ import axios from 'axios'
                 }
             }
         },
+        mounted(){
+            this.student = this.$route.params.id
+            this.getStudentData(this.$route.params.id)
+        },
         methods: {
-            saveStudent(){
+            getStudentData(studentId) {
+                axios.get(`https://reqres.in/api/users/${studentId}`)
+                    .then( res => {
+                        console.log(res.data.data)
+                        this.model.student = res.data.data
+                    })
+                    .catch((error) => {
+                        mythis.errorList = error.response.data.errors
+                    })
+            },
+            updateStudent(){
                 var mythis = this
-                axios.post('https://reqres.in/api/users', this.model.student)
+                axios.put(`https://reqres.in/api/users/${this.studentId}`, this.model.student)
                     .then(res => {
                         alert(res.statusText)
-                        this.model.student = {
-                            first_name: '',
-                            last_name: '',
-                            email: ''
-                        }
                         this.errorList = ''
                     })
                     .catch((error) => {

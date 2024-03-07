@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-header">
                 <h4>Students</h4>
-                <RouterLink to="/student/create" class="btn btn-primary float-end">
+                <RouterLink to="/students/create" class="btn btn-primary float-end">
                     Add student
                 </RouterLink>
             </div>
@@ -15,6 +15,8 @@
                             <th> ID </th>
                             <th>First Name </th>
                             <th>Last Name </th>
+                            <th>Email</th>
+                            <th>Actions </th>
                         </tr>
                     </thead>
                     <tbody v-if="this.students.length > 0">
@@ -24,10 +26,10 @@
                             <td>{{ student.last_name }}</td>
                             <td>{{ student.email }}</td>
                             <td>
-                                <RouterLink to="/" class="btn btn-success float-end">
+                                <RouterLink :to="{path : '/students/'+student.id+'/update'}" class="btn btn-success mx-2">
                                     Edit
                                 </RouterLink>
-                                <button class="btn btn-danger float-end">
+                                <button class="btn btn-danger mx-2">
                                     Delete
                                 </button>
                             </td>
