@@ -1,6 +1,6 @@
 
 <template>
-    <div class="container">
+    <div class="container mt-5">
         <div class="card">
             <div class="card-header">
                 <h4>Students</h4>
@@ -62,7 +62,6 @@ import axios from 'axios'
                 axios.get('https://reqres.in/api/users')
                     .then( res => {
                         this.students = res.data.data
-                        console.log(res)
                     })
             }
         }
